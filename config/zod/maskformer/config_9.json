@@ -14,7 +14,7 @@
         "save_epoch": 20,
         "model_path": ""
     },
-    "Log": {"logdir": "logs/maskformer_large_fusion/"},
+    "Log": {"logdir": "logs/maskformer/config_9"},
     "MaskFormer": {
         "model_timm": "swinv2_large_window12to16_192to256",
         "pixel_decoder_channels": 256,

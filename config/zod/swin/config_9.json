@@ -14,7 +14,7 @@
         "save_epoch": 20,
         "model_path": ""
     },
-    "Log": {"logdir": "./logs/swin_config_9/"},
+    "Log": {"logdir": "logs/swin/config_9"},
     "SwinFusion": {
         "emb_dims": [192, 384, 768, 1536],
         "hooks": [0, 1, 2, 3],

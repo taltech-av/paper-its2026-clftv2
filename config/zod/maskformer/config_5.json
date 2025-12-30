@@ -14,7 +14,7 @@
         "save_epoch": 20,
         "model_path": ""
     },
-    "Log": {"logdir": "logs/maskformer_lidar/"},
+    "Log": {"logdir": "logs/maskformer/config_5"},
     "MaskFormer": {
         "model_timm": "swinv2_base_window8_256",
         "pixel_decoder_channels": 256,

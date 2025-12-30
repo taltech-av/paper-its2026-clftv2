@@ -14,7 +14,7 @@
         "save_epoch": 20,
         "model_path": ""
     },
-    "Log": {"logdir": "logs/maskformer_tiny_fusion/"},
+    "Log": {"logdir": "logs/maskformer/config_7"},
     "MaskFormer": {
         "model_timm": "swinv2_tiny_window8_256",
         "pixel_decoder_channels": 256,
