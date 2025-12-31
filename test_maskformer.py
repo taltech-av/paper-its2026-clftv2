@@ -282,8 +282,12 @@ def test_model_on_weather(config, model, device, weather_condition, checkpoint_p
         ap_results[cls_name] = ap
 
     # Calculate inference time
-    avg_time = total_time / len(val_loader)
-    fps = 1.0 / avg_time
+    if len(val_loader) > 0:
+        avg_time = total_time / len(val_loader)
+        fps = 1.0 / avg_time if avg_time > 0 else 0.0
+    else:
+        avg_time = 0.0
+        fps = 0.0
 
     # Prepare results
     results = {}

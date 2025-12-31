@@ -264,7 +264,10 @@ def test_model_on_weather(config, model, device, weather_condition, checkpoint_p
 
     # Calculate final metrics
     final_metrics = metrics_calculator.compute()
-    avg_time = total_time / len(val_loader)
+    if len(val_loader) > 0:
+        avg_time = total_time / len(val_loader)
+    else:
+        avg_time = 0.0
 
     # Print results for this weather condition
     print(f"\n{weather_condition} Results:")
@@ -293,9 +296,9 @@ def test_model_on_weather(config, model, device, weather_condition, checkpoint_p
         "total_seconds": avg_time * len(val_loader),
         "samples": len(val_loader) * config['General']['batch_size'],
         "batches": len(val_loader),
-        "avg_per_sample_ms": (avg_time * 1000) / config['General']['batch_size'],
+        "avg_per_sample_ms": (avg_time * 1000) / config['General']['batch_size'] if config['General']['batch_size'] > 0 else 0.0,
         "avg_per_batch_ms": avg_time * 1000,
-        "throughput_fps": config['General']['batch_size'] / avg_time
+        "throughput_fps": config['General']['batch_size'] / avg_time if avg_time > 0 else 0.0
     }
 
     return results

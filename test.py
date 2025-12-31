@@ -155,9 +155,9 @@ def run_test_suite(tester, config, test_data_files, test_data_path, num_classes)
             'total_seconds': round(total_time, 2),
             'samples': inference_stats['total_samples'],
             'batches': inference_stats['total_batches'],
-            'avg_per_sample_ms': round((inference_stats['total_inference_time'] / inference_stats['total_samples']) * 1000, 2),
-            'avg_per_batch_ms': round((inference_stats['total_inference_time'] / inference_stats['total_batches']) * 1000, 2),
-            'throughput_fps': round(inference_stats['total_samples'] / inference_stats['total_inference_time'], 2)
+            'avg_per_sample_ms': round((inference_stats['total_inference_time'] / inference_stats['total_samples']) * 1000, 2) if inference_stats['total_samples'] > 0 else 0.0,
+            'avg_per_batch_ms': round((inference_stats['total_inference_time'] / inference_stats['total_batches']) * 1000, 2) if inference_stats['total_batches'] > 0 else 0.0,
+            'throughput_fps': round(inference_stats['total_samples'] / inference_stats['total_inference_time'], 2) if inference_stats['total_inference_time'] > 0 else 0.0
         }
         
         # Extract weather condition from filename
