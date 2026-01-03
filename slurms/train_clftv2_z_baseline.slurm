@@ -11,7 +11,6 @@
 #SBATCH --account=project_autolab
 
 ## run job
-cd ..
 source venv/bin/activate 
 
 python train_swin.py --config config/zod/swin/config_1.json

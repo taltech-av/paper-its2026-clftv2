@@ -11,50 +11,49 @@
 #SBATCH --account=project_autolab
 
 ## run job
-cd ..
 source venv/bin/activate 
 
-python train.py --config config/waymo/config_1.json
-python test.py --config config/waymo/config_1.json
-python visualize.py --config config/waymo/config_1.json --upload
-python3 benchmark.py --config config/waymo/config_1.json
+python train.py --config config/waymo/clft/config_1.json
+python test.py --config config/waymo/clft/config_1.json
+python visualize.py --config config/waymo/clft/config_1.json --upload
+python3 benchmark.py --config config/waymo/clft/config_1.json
 
-python train.py --config config/waymo/config_2.json
-python test.py --config config/waymo/config_2.json
-python visualize.py --config config/waymo/config_2.json --upload
-python3 benchmark.py --config config/waymo/config_2.json
+python train.py --config config/waymo/clft/config_2.json
+python test.py --config config/waymo/clft/config_2.json
+python visualize.py --config config/waymo/clft/config_2.json --upload
+python3 benchmark.py --config config/waymo/clft/config_2.json
 
-python train.py --config config/waymo/config_3.json
-python test.py --config config/waymo/config_3.json
-python visualize.py --config config/waymo/config_3.json --upload
-python3 benchmark.py --config config/waymo/config_3.json
+python train.py --config config/waymo/clft/config_3.json
+python test.py --config config/waymo/clft/config_3.json
+python visualize.py --config config/waymo/clft/config_3.json --upload
+python3 benchmark.py --config config/waymo/clft/config_3.json
 
-python train.py --config config/waymo/config_4.json
-python test.py --config config/waymo/config_4.json
-python visualize.py --config config/waymo/config_4.json --upload
-python3 benchmark.py --config config/waymo/config_4.json
+python train.py --config config/waymo/clft/config_4.json
+python test.py --config config/waymo/clft/config_4.json
+python visualize.py --config config/waymo/clft/config_4.json --upload
+python3 benchmark.py --config config/waymo/clft/config_4.json
 
-python train.py --config config/waymo/config_5.json
-python test.py --config config/waymo/config_5.json
-python visualize.py --config config/waymo/config_5.json --upload
-python3 benchmark.py --config config/waymo/config_5.json
+python train.py --config config/waymo/clft/config_5.json
+python test.py --config config/waymo/clft/config_5.json
+python visualize.py --config config/waymo/clft/config_5.json --upload
+python3 benchmark.py --config config/waymo/clft/config_5.json
 
-python train.py --config config/waymo/config_6.json
-python test.py --config config/waymo/config_6.json
-python visualize.py --config config/waymo/config_6.json --upload
-python3 benchmark.py --config config/waymo/config_6.json
+python train.py --config config/waymo/clft/config_6.json
+python test.py --config config/waymo/clft/config_6.json
+python visualize.py --config config/waymo/clft/config_6.json --upload
+python3 benchmark.py --config config/waymo/clft/config_6.json
 
-python train.py --config config/waymo/config_7.json
-python test.py --config config/waymo/config_7.json
-python visualize.py --config config/waymo/config_7.json --upload
-python3 benchmark.py --config config/waymo/config_7.json
+python train.py --config config/waymo/clft/config_7.json
+python test.py --config config/waymo/clft/config_7.json
+python visualize.py --config config/waymo/clft/config_7.json --upload
+python3 benchmark.py --config config/waymo/clft/config_7.json
 
-python train.py --config config/waymo/config_8.json
-python test.py --config config/waymo/config_8.json
-python visualize.py --config config/waymo/config_8.json --upload
-python3 benchmark.py --config config/waymo/config_8.json
+python train.py --config config/waymo/clft/config_8.json
+python test.py --config config/waymo/clft/config_8.json
+python visualize.py --config config/waymo/clft/config_8.json --upload
+python3 benchmark.py --config config/waymo/clft/config_8.json
 
-python train.py --config config/waymo/config_9.json
-python test.py --config config/waymo/config_9.json
-python visualize.py --config config/waymo/config_9.json --upload
-python3 benchmark.py --config config/waymo/config_9.json
+python train.py --config config/waymo/clft/config_9.json
+python test.py --config config/waymo/clft/config_9.json
+python visualize.py --config config/waymo/clft/config_9.json --upload
+python3 benchmark.py --config config/waymo/clft/config_9.json

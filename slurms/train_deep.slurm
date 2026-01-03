@@ -11,7 +11,6 @@
 #SBATCH --account=project_autolab
 
 ## run job
-cd ..
 source venv/bin/activate
 
 python3 train_deeplabv3plus.py --config $1
