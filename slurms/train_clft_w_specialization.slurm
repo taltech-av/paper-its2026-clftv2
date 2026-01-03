@@ -10,7 +10,8 @@
 #SBATCH --mail-type=ALL
 #SBATCH --account=project_autolab
 
-## run job   
+## run job
+cd ..
 source venv/bin/activate 
 
 python train.py --config config/waymo/clft/human_sign.json

@@ -10,8 +10,10 @@
 #SBATCH --mail-type=ALL
 #SBATCH --account=project_autolab
 
-## run job   
-source venv/bin/activate 
+## run job
+cd ..
+source venv/bin/activate
+
 python3 train_deeplabv3plus.py --config $1
 python3 test_deeplabv3plus.py --config $1
 python3 visualize_deeplabv3plus.py --config $1 --upload
