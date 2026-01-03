@@ -13,32 +13,32 @@
 ## run job   
 source venv/bin/activate 
 
-python train.py --config config/zod_hpc/human_sign.json
-python test.py --config config/zod_hpc/human_sign.json
-python visualize.py --config config/zod_hpc/human_sign.json --upload
-python benchmark.py --config config/zod_hpc/human_sign.json
+python train.py --config config/zod/human_sign.json
+python test.py --config config/zod/human_sign.json
+python visualize.py --config config/zod/human_sign.json --upload
+python benchmark.py --config config/zod/human_sign.json
 
-python train.py --config config/zod_hpc/human_specialization.json
-python test.py --config config/zod_hpc/human_specialization.json
-python visualize.py --config config/zod_hpc/human_specialization.json --upload
-python benchmark.py --config config/zod_hpc/human_specialization.json
+python train.py --config config/zod/human_specialization.json
+python test.py --config config/zod/human_specialization.json
+python visualize.py --config config/zod/human_specialization.json --upload
+python benchmark.py --config config/zod/human_specialization.json
 
-python train.py --config config/zod_hpc/human_vehicle.json
-python test.py --config config/zod_hpc/human_vehicle.json
-python visualize.py --config config/zod_hpc/human_vehicle.json --upload
-python benchmark.py --config config/zod_hpc/human_vehicle.json
+python train.py --config config/zod/human_vehicle.json
+python test.py --config config/zod/human_vehicle.json
+python visualize.py --config config/zod/human_vehicle.json --upload
+python benchmark.py --config config/zod/human_vehicle.json
 
-python train.py --config config/zod_hpc/sign_specialization.json
-python test.py --config config/zod_hpc/sign_specialization.json
-python visualize.py --config config/zod_hpc/sign_specialization.json --upload
-python benchmark.py --config config/zod_hpc/sign_specialization.json
+python train.py --config config/zod/sign_specialization.json
+python test.py --config config/zod/sign_specialization.json
+python visualize.py --config config/zod/sign_specialization.json --upload
+python benchmark.py --config config/zod/sign_specialization.json
 
-python train.py --config config/zod_hpc/vehicle_sign.json
-python test.py --config config/zod_hpc/vehicle_sign.json
-python visualize.py --config config/zod_hpc/vehicle_sign.json --upload
-python benchmark.py --config config/zod_hpc/vehicle_sign.json
+python train.py --config config/zod/vehicle_sign.json
+python test.py --config config/zod/vehicle_sign.json
+python visualize.py --config config/zod/vehicle_sign.json --upload
+python benchmark.py --config config/zod/vehicle_sign.json
 
-python train.py --config config/zod_hpc/vehicle_specialization.json
-python test.py --config config/zod_hpc/vehicle_specialization.json
-python visualize.py --config config/zod_hpc/vehicle_specialization.json --upload
-python benchmark.py --config config/zod_hpc/vehicle_specialization.json
+python train.py --config config/zod/vehicle_specialization.json
+python test.py --config config/zod/vehicle_specialization.json
+python visualize.py --config config/zod/vehicle_specialization.json --upload
+python benchmark.py --config config/zod/vehicle_specialization.json
