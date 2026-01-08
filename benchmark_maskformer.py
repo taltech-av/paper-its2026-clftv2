@@ -531,7 +531,7 @@ def main():
 
     # Find all config files
     config_files = []
-    for base_path in args.configs:
+    for base_path in args.config:
         if os.path.isfile(base_path):
             if base_path.endswith('.json'):
                 config_files.append(base_path)
