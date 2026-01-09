@@ -183,9 +183,9 @@ def main():
         print(f"Visualizations will be uploaded to Vision API for epoch: {epoch_uuid}")
     
     # Extract config name for output directory
-    config_name = os.path.splitext(os.path.basename(args.config))[0]
     dataset_name = config['Dataset']['name']
-    output_base = f'logs/{dataset_name}/{config_name}/visualizations'
+    log_dir = config['Log']['logdir']
+    output_base = os.path.join(log_dir, 'visualizations')
     
     # Build and load model
     model_builder = ModelBuilder(config, device)

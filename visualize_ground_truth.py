@@ -217,9 +217,9 @@ def main():
     device = torch.device("cpu")
     
     # Extract config name for output directory
-    config_name = os.path.splitext(os.path.basename(args.config))[0]
     dataset_name = config['Dataset']['name']
-    output_base = f'logs/{dataset_name}/{config_name}/visualizations'
+    log_dir = config['Log']['logdir']
+    output_base = os.path.join(log_dir, 'visualizations')
     
     # Setup data loader (for potential future use)
     data_loader = InferenceDataLoader(config)

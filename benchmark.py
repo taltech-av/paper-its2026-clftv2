@@ -738,7 +738,7 @@ def main():
     args = parser.parse_args()
 
     # Find all config files
-    config_files = find_config_files(args.configs)
+    config_files = find_config_files(args.config)
     print(f"Found {len(config_files)} config files")
 
     if not config_files:
