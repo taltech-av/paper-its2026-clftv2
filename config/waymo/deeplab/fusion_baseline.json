@@ -44,18 +44,18 @@
             "lidar_std_iseauto": [7.79, 2.156, 7.6]
         },
         "dataset_classes": [
-            {"name": "background", "index": 0},
-            {"name": "ignore", "index": 1},
-            {"name": "vehicle", "index": 2},
+            {"name": "ignore", "index": 0},
+            {"name": "vehicle", "index": 1},
+            {"name": "pedestrian", "index": 2},
             {"name": "sign", "index": 3},
             {"name": "cyclist", "index": 4},
-            {"name": "pedestrian", "index": 5}
+            {"name": "background", "index": 5}
         ],
         "train_classes": [
-            {"name": "background", "index": 0, "weight": 0.1, "dataset_mapping": [0, 1], "color": [0, 0, 0]},
-            {"name": "vehicle", "index": 1, "weight": 10.0, "dataset_mapping": [2], "color": [128, 0, 128]},
-            {"name": "sign", "index": 2, "weight": 15.0, "dataset_mapping": [3], "color": [255, 0, 0]},
-            {"name": "human", "index": 3, "weight": 20.0, "dataset_mapping": [4, 5], "color": [0, 255, 255]}
+            {"name": "background", "index": 0, "weight": 0.5, "dataset_mapping": [0, 5], "color": [0, 0, 0]},
+            {"name": "vehicle", "index": 1, "weight": 4.0, "dataset_mapping": [1], "color": [128, 0, 128]},
+            {"name": "sign", "index": 2, "weight": 10.0, "dataset_mapping": [3], "color": [255, 0, 0]},
+            {"name": "human", "index": 3, "weight": 4.0, "dataset_mapping": [2, 4], "color": [0, 255, 255]}
         ]
     }
 }
