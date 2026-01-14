@@ -82,11 +82,14 @@ sbatch -J train-6w train.slurm ./config/waymo_hpc/config_6.json
 sbatch -J train-9w train.slurm ./config/waymo_hpc/config_9.json
 
 # Copy json files from server to local
-rsync -avz --include='*/' --include='*.json' --exclude='*' totahv@base.hpc.taltech.ee:/gpfs/mariana/smbhome/totahv/zod_logs/ /media/tom/ml/projects/clft-zod-training/logs/zod
+rsync -avz --include='*/' --include='*.json' --exclude='*' totahv@base.hpc.taltech.ee:/gpfs/mariana/smbhome/totahv/clft-zod-training/logs /media/tom/ml/hpc_logs
 
 # Copy data to server
 rsync -avz /media/tom/ml/projects/clft-zod-training/zod_dataset totahv@base.hpc.taltech.ee:/gpfs/mariana/smbhome/totahv/clft-zod-training/
 rsync -avz /media/tom/ml/projects/clft-zod-training/waymo_dataset totahv@base.hpc.taltech.ee:/gpfs/mariana/smbhome/totahv/clft-zod-training/
 
 # Download specific epoch file from server to local
-rsync -avz totahv@base.hpc.taltech.ee:/gpfs/mariana/smbhome/totahv/zod_logs/config_9/checkpoints/epoch_49_a86928d9-a4cc-4a6f-ae42-569def988ecf.pth /media/tom/ml/projects/clft-zod-training/logs/zod/config_9/checkpoints/
+rsync -avz totahv@base.hpc.taltech.ee:/gpfs/mariana/smbhome/totahv/clft-zod-training/logs/zod/swin/config_9/checkpoints/epoch_49_becfeb0e-7d74-4e30-8bec-a4b1f0db68fd.pth /media/tom/ml/clftv2_fusion_large.pth
+rsync -avz totahv@base.hpc.taltech.ee:/gpfs/mariana/smbhome/totahv/clft-zod-training/logs/zod/clft/config_8/checkpoints/epoch_49_71f5b556-d4e0-42bd-bc39-3f7fb65a40b0.pth /media/tom/ml/clftv1_fusion_hybrid.pth
+
+rsync -avz totahv@base.hpc.taltech.ee:/gpfs/mariana/smbhome/totahv/clft-zod-training/logs/waymo/swin/config_8/checkpoints/epoch_49_2ea14d3d-490b-4d65-91a9-631cd6b9c827.pth /media/tom/ml/clftv2_base_waymo.pth

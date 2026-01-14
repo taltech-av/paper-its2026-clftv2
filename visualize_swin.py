@@ -158,7 +158,7 @@ def main():
     parser.add_argument('-p', '--path', type=str, required=False,
                         default=None,
                         help='Path to image file or text file with image paths (default: auto-detect based on dataset)')
-    parser.add_argument('--config', type=str, required=True,
+    parser.add_argument('-c', '--config', type=str, required=True,
                         help='Path to config JSON file')
     parser.add_argument('--upload', action='store_true',
                         help='Upload visualizations to vision service')
