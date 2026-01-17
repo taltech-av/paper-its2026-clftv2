@@ -22,18 +22,13 @@ class AdvancedModelBuilder:
     def build_model(self):
         """Build advanced model based on config."""
 
-        resize = self.config['Dataset']['transforms']['resize']
         pretrained = self.config['SwinFusion'].get('pretrained', True)
         fusion_strategy = self.config['SwinFusion'].get('fusion_strategy', 'cross_attention')
         
         model = SwinTransformerFusion(
-            RGB_tensor_size=(3, resize, resize),
-            XYZ_tensor_size=(3, resize, resize),
-            patch_size=self.config['SwinFusion']['patch_size'],
             emb_dims=self.config['SwinFusion'].get('emb_dims', None),
             resample_dim=self.config['SwinFusion']['resample_dim'],
             read=self.config['SwinFusion']['read'],
-            hooks=self.config['SwinFusion']['hooks'],
             reassemble_s=self.config['SwinFusion']['reassembles'],
             nclasses=self.num_unique_classes,
             type=self.config['SwinFusion']['type'],

@@ -40,7 +40,7 @@ class Read_projection(nn.Module):
         return self.project(features)
 
 class Resample(nn.Module):
-    def __init__(self, p, s, image_height, emb_dim, resample_dim):
+    def __init__(self, s, emb_dim, resample_dim):
         super(Resample, self).__init__()
         assert (s in [4, 8, 16, 32]), "s must be in [4, 8, 16, 32]"
         self.emb_dim = emb_dim
@@ -58,19 +58,18 @@ class Resample(nn.Module):
         return x
 
 class SpatialReassemble(nn.Module):
-    def __init__(self, image_size, read, p, s, emb_dim, resample_dim):
+    def __init__(self, read, s, emb_dim, resample_dim):
         """
         Modified for spatial inputs [b, c, h, w]
         """
         super(SpatialReassemble, self).__init__()
-        channels, image_height, image_width = image_size
 
         # For spatial, read and concat are identity
         self.read = nn.Identity()
         self.concat = nn.Identity()
 
         #Projection + Resample
-        self.resample = Resample(p, s, image_height, emb_dim, resample_dim)
+        self.resample = Resample(s, emb_dim, resample_dim)
 
     def forward(self, x):
         # x is already [b, c, h, w]
@@ -158,6 +157,28 @@ class Fusion(nn.Module):
             # Cross Attention for Fusion
             self.cross_attn = CrossAttention(resample_dim)
             self.alpha = nn.Parameter(torch.tensor(0.0)) # Learnable scaling parameter
+        elif self.fusion_strategy == 'gmf':
+            # Geometric Modulation Fusion
+            self.modulation_mlp = nn.Sequential(
+                nn.AdaptiveAvgPool2d(1),
+                nn.Flatten(),
+                nn.Linear(resample_dim, resample_dim * 2),
+                nn.ReLU(),
+            )
+            self.alpha = nn.Parameter(torch.zeros(1))  # Gating parameter
+        elif self.fusion_strategy == 'sarf':
+            self.alpha = nn.Parameter(torch.zeros(1))  # Gating parameter
+            self.beta = nn.Parameter(torch.ones(resample_dim) * 0.5)  # Channel-wise weighting parameter
+            self.ln_rgb = nn.LayerNorm(resample_dim)
+            self.ln_lidar = nn.LayerNorm(resample_dim)
+            # Spatial attention for beta
+            self.beta_attn = nn.Sequential(
+                nn.Conv2d(resample_dim * 2, resample_dim, kernel_size=1),
+                nn.Sigmoid()
+            )
+        elif self.fusion_strategy == 'simple_average':
+            # No additional parameters for true simple average
+            pass
 
     def forward(self, rgb, lidar, previous_stage=None, modal = 'rgb'):
         if previous_stage == None:
@@ -171,17 +192,39 @@ class Fusion(nn.Module):
         elif modal == 'lidar':
             output_stage1_lidar = self.res_conv_xyz(lidar)
             output_stage1 = output_stage1_lidar + previous_stage
-        elif modal == 'cross_fusion': 
-            output_stage1_rgb = self.res_conv_rgb(rgb)
-            output_stage1_lidar = self.res_conv_xyz(lidar)
-            
+        elif modal == 'cross_fusion':
             if self.fusion_strategy == 'cross_attention':
+                output_stage1_rgb = self.res_conv_rgb(rgb)
+                output_stage1_lidar = self.res_conv_xyz(lidar)
                 # Apply Cross Attention: Query=RGB, Key/Value=LiDAR
                 attn_out = self.cross_attn(output_stage1_rgb, output_stage1_lidar)
                 # Formula: F_f = F_c + alpha * Attention(F_c, F_l) + F_l
                 output_stage1 = output_stage1_rgb + (self.alpha * attn_out) + output_stage1_lidar + previous_stage
+            elif self.fusion_strategy == 'sarf':
+                output_stage1_rgb = self.res_conv_rgb(rgb)
+                output_stage1_lidar = self.res_conv_xyz(lidar)
+                # Apply layer normalization
+                output_stage1_rgb = self.ln_rgb(output_stage1_rgb.permute(0, 2, 3, 1)).permute(0, 3, 1, 2)
+                output_stage1_lidar = self.ln_lidar(output_stage1_lidar.permute(0, 2, 3, 1)).permute(0, 3, 1, 2)
+                
+                # Spatial adaptive weighting
+                beta_map = self.beta_attn(torch.cat([output_stage1_rgb, output_stage1_lidar], dim=1))  # [B, C, H, W]
+                weighted_avg = (1 - beta_map) * output_stage1_rgb + beta_map * output_stage1_lidar
+                output_stage1 = output_stage1_rgb + output_stage1_lidar + previous_stage + self.alpha * weighted_avg
+            elif self.fusion_strategy == 'gmf':
+                output_stage1_rgb = self.res_conv_rgb(rgb)
+                output_stage1_lidar = self.res_conv_xyz(lidar)
+                # Geometric Modulation Fusion
+                lidar_pooled = self.modulation_mlp(output_stage1_lidar)
+                gamma, beta = lidar_pooled.chunk(2, dim=-1)
+                gamma = gamma.unsqueeze(-1).unsqueeze(-1)  # For broadcasting
+                beta = beta.unsqueeze(-1).unsqueeze(-1)
+                rgb_mod = gamma * output_stage1_rgb + beta
+                # Gated residual
+                output_stage1 = rgb_mod + output_stage1_lidar + previous_stage + self.alpha * (rgb_mod + output_stage1_lidar)
             elif self.fusion_strategy == 'simple_average':
-                output_stage1 = (output_stage1_rgb + output_stage1_lidar) / 2 + previous_stage
+                # True simple average fusion without resblocks and previous stage
+                output_stage1 = (rgb + lidar) / 2
             else:
                 raise ValueError(f"Unknown fusion strategy: {self.fusion_strategy}")
         
@@ -210,13 +253,9 @@ class HeadSeg(nn.Module):
 
 class SwinTransformerFusion(nn.Module):
     def __init__(self,
-                 RGB_tensor_size=None,
-                 XYZ_tensor_size=None,
-                 patch_size=4,
                  emb_dims=[128, 256, 512, 1024],
                  resample_dim=256,
                  read='ignore',
-                 hooks=[1, 3, 21, 23],
                  reassemble_s=[4, 8, 16, 32],
                  nclasses=None,
                  type='segmentation',
@@ -241,16 +280,14 @@ class SwinTransformerFusion(nn.Module):
         else:
             raise ValueError("emb_dims must be provided if backbone does not have feature_info")
             
-        self.patch_size = patch_size  # Not used for spatial, but for Reassemble
-
         # Reassembles Fusion
         self.reassembles_RGB = []
         self.reassembles_XYZ = []
         self.fusions = []
         for i, s in enumerate(reassemble_s):
             emb_dim_i = self.emb_dims[i]
-            self.reassembles_RGB.append(SpatialReassemble(RGB_tensor_size, read, self.patch_size, s, emb_dim_i, resample_dim))
-            self.reassembles_XYZ.append(SpatialReassemble(XYZ_tensor_size, read, self.patch_size, s, emb_dim_i, resample_dim))
+            self.reassembles_RGB.append(SpatialReassemble(read, s, emb_dim_i, resample_dim))
+            self.reassembles_XYZ.append(SpatialReassemble(read, s, emb_dim_i, resample_dim))
             self.fusions.append(Fusion(resample_dim, fusion_strategy=fusion_strategy))
         self.reassembles_RGB = nn.ModuleList(self.reassembles_RGB)
         self.reassembles_XYZ = nn.ModuleList(self.reassembles_XYZ)
@@ -280,9 +317,6 @@ class SwinTransformerFusion(nn.Module):
         else:
             raise ValueError(f"Invalid modal: {modal}")
         
-        # Determine fusion strategy (assume all fusions have the same strategy)
-        fusion_strategy = self.fusions[0].fusion_strategy if self.fusions else 'cross_attention'
-        
         previous_stage = None
         for i in range(len(self.fusions)):
             if modal == 'rgb':
@@ -292,15 +326,9 @@ class SwinTransformerFusion(nn.Module):
                 activation_result_lidar = features_lidar[i]
                 activation_result_rgb = torch.zeros_like(activation_result_lidar)
             elif modal == 'cross_fusion':
-                if fusion_strategy == 'simple_average':
-                    # For simple average, average the backbone features
-                    activation_result = (features_rgb[i] + features_lidar[i]) / 2
-                    activation_result_rgb = activation_result
-                    activation_result_lidar = activation_result
-                else:
-                    # For cross_attention or others, use separate features
-                    activation_result_rgb = features_rgb[i]
-                    activation_result_lidar = features_lidar[i]
+                # For all fusion strategies, use separate features
+                activation_result_rgb = features_rgb[i]
+                activation_result_lidar = features_lidar[i]
             
             # Ensure [b, c, h, w]
             if activation_result_rgb.shape[1] != self.emb_dims[i]:
