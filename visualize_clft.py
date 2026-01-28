@@ -134,9 +134,6 @@ def process_images(model, data_loader, visualizer, image_paths, dataroot,
 def main():
     # Parse arguments
     parser = argparse.ArgumentParser(description='Visualize Model Predictions (Refactored)')
-    parser.add_argument('-p', '--path', type=str, required=False,
-                       default='zod_dataset/visualizations.txt',
-                       help='Path to image file or text file with image paths')
     parser.add_argument('-c', '--config', type=str, required=True,
                        help='Path to config file')
     parser.add_argument('--upload', action='store_true',
@@ -149,10 +146,12 @@ def main():
     with open(args.config, 'r') as f:
         config = json.load(f)
     
-    # Fix default path for waymo
+    # Set visualization path based on dataset
     dataset_name = config['Dataset']['name']
-    if args.path == 'zod_dataset/visualizations.txt' and dataset_name == 'waymo':
-        args.path = 'waymo_dataset/visualizations.txt'
+    if dataset_name == 'waymo':
+        path = 'waymo_dataset/splits_clft/visualizations.txt'
+    else:
+        path = 'zod_dataset/visualizations.txt'
     
     # Setup device
     device = torch.device(config['General']['device']
@@ -201,7 +200,7 @@ def main():
     
     # Load image paths
     dataroot = os.path.abspath(config['Dataset']['dataset_root'])
-    image_paths = load_image_paths(args.path, dataroot)
+    image_paths = load_image_paths(path, dataroot)
     print(f"Found {len(image_paths)} images to process")
     
     # Get modality
