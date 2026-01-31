@@ -1,11 +1,11 @@
 {
-    "Summary": "Waymo RGB CLFT-Hybrid - Sign Specialization",
-    "tags": ["Waymo", "CLFT-Hybrid", "RGB", "Sign-Only", "Specialization"],
-    "CLI": {"backbone": "clft", "mode": "rgb", "path": "./waymo_dataset/splits_clft/"},
+    "Summary": "Waymo DeepLabV3+ RGB - Human+Sign Specialization",
+    "tags": ["Waymo", "DeepLabV3+", "RGB", "Human+Sign", "Specialization"],
+    "CLI": {"backbone": "deeplabv3plus", "mode": "rgb", "path": "./waymo_dataset/splits_clft/"},
     "General": {
         "device": "cuda:0",
         "epochs": 100,
-        "batch_size": 12,
+        "batch_size": 24,
         "path_predicted_images": "output",
         "seed": 0,
         "resume_training": false,
@@ -14,21 +14,12 @@
         "max_epochs": 2,
         "model_path": ""
     },
-    "Log": {"logdir": "./logs/waymo/clft/sign_specialization/"},
-    "CLFT": {
-        "emb_dim": 768,
-        "hooks": [2, 5, 8, 11],
-        "model_timm": "vit_base_resnet50_384",
-        "clft_lr": 8e-05,
-        "patch_size": 16,
-        "reassembles": [4, 8, 16, 32],
-        "read": "projection",
-        "resample_dim": 256,
-        "type": "segmentation",
-        "loss_depth": "ssi",
-        "loss_segmentation": "ce",
-        "lr_momentum": 0.99,
-        "pretrained": true
+    "Log": {"logdir": "./logs/waymo/deeplab/human_sign/"},
+    "DeepLabV3Plus": {
+        "learning_rate": 0.0001,
+        "backbone": "resnet101",
+        "pretrained": true,
+        "lr_scheduler": {"type": "step", "step_size": 15, "gamma": 0.5}
     },
     "Dataset": {
         "name": "waymo",
@@ -58,8 +49,9 @@
             {"name": "background", "index": 5}
         ],
         "train_classes": [
-            {"name": "background", "index": 0, "weight": 0.5, "dataset_mapping": [0, 1, 2, 4, 5], "color": [0, 0, 0]},
-            {"name": "sign", "index": 1, "weight": 20.0, "dataset_mapping": [3], "color": [255, 0, 0]}
+            {"name": "background", "index": 0, "weight": 0.5, "dataset_mapping": [0, 1, 5], "color": [0, 0, 0]},
+            {"name": "human", "index": 1, "weight": 10.0, "dataset_mapping": [2, 4], "color": [0, 255, 255]},
+            {"name": "sign", "index": 2, "weight": 10.0, "dataset_mapping": [3], "color": [255, 0, 0]}
         ]
     }
 }

@@ -1,6 +1,6 @@
 {
-    "Summary": "ZOD RGB CLFT-Hybrid - Human Specialization",
-    "tags": ["ZOD", "CLFT-Hybrid", "RGB", "Human-Only", "Specialization"],
+    "Summary": "ZOD RGB CLFT-Hybrid - Vehicle Specialization",
+    "tags": ["ZOD", "CLFT-Hybrid", "RGB", "Vehicle-Only", "Specialization"],
     "CLI": {"backbone": "clft", "mode": "rgb", "path": "./zod_dataset/"},
     "General": {
         "device": "cuda:0",
@@ -14,7 +14,7 @@
         "max_epochs": 2,
         "model_path": ""
     },
-    "Log": {"logdir": "./logs/zod/clft/human_specialization/"},
+    "Log": {"logdir": "./logs/zod/clft/specialization/vehicle_only/"},
     "CLFT": {
         "emb_dim": 768,
         "hooks": [2, 5, 8, 11],
@@ -61,8 +61,8 @@
             {"name": "pedestrian", "index": 5}
         ],
         "train_classes": [
-            {"name": "background", "index": 0, "weight": 0.5, "dataset_mapping": [0, 1, 2, 3], "color": [0, 0, 0]},
-            {"name": "human", "index": 1, "weight": 20.0, "dataset_mapping": [4, 5], "color": [0, 255, 255]}
+            {"name": "background", "index": 0, "weight": 0.5, "dataset_mapping": [0, 1, 3, 4, 5], "color": [0, 0, 0]},
+            {"name": "vehicle", "index": 1, "weight": 10.0, "dataset_mapping": [2], "color": [128, 0, 128]}
         ]
     }
 }

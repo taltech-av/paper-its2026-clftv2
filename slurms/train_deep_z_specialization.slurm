@@ -20,37 +20,37 @@ python visualize_deeplabv3plus.py --config config/zod/deeplab/rgb_baseline.json 
 python3 benchmark.py --config config/zod/deeplab/rgb_baseline.json
 
 # Vehicle Only Specialization
-python train_deeplabv3plus.py --config config/zod/deeplab/rgb_vehicle_only.json
-python test_deeplabv3plus.py --config config/zod/deeplab/rgb_vehicle_only.json
-python visualize_deeplabv3plus.py --config config/zod/deeplab/rgb_vehicle_only.json --upload
-python3 benchmark.py --config config/zod/deeplab/rgb_vehicle_only.json
+python train_deeplabv3plus.py --config config/zod/deeplab/specialization/rgb_vehicle_only.json
+python test_deeplabv3plus.py --config config/zod/deeplab/specialization/rgb_vehicle_only.json
+python visualize_deeplabv3plus.py --config config/zod/deeplab/specialization/rgb_vehicle_only.json --upload
+python3 benchmark.py --config config/zod/deeplab/specialization/rgb_vehicle_only.json
 
 # Sign Only Specialization
-python train_deeplabv3plus.py --config config/zod/deeplab/rgb_sign_only.json
-python test_deeplabv3plus.py --config config/zod/deeplab/rgb_sign_only.json
-python visualize_deeplabv3plus.py --config config/zod/deeplab/rgb_sign_only.json --upload
-python3 benchmark.py --config config/zod/deeplab/rgb_sign_only.json
+python train_deeplabv3plus.py --config config/zod/deeplab/specialization/rgb_sign_only.json
+python test_deeplabv3plus.py --config config/zod/deeplab/specialization/rgb_sign_only.json
+python visualize_deeplabv3plus.py --config config/zod/deeplab/specialization/rgb_sign_only.json --upload
+python3 benchmark.py --config config/zod/deeplab/specialization/rgb_sign_only.json
 
 # Human Only Specialization
-python train_deeplabv3plus.py --config config/zod/deeplab/rgb_human_only.json
-python test_deeplabv3plus.py --config config/zod/deeplab/rgb_human_only.json
-python visualize_deeplabv3plus.py --config config/zod/deeplab/rgb_human_only.json --upload
-python3 benchmark.py --config config/zod/deeplab/rgb_human_only.json
+python train_deeplabv3plus.py --config config/zod/deeplab/specialization/rgb_human_only.json
+python test_deeplabv3plus.py --config config/zod/deeplab/specialization/rgb_human_only.json
+python visualize_deeplabv3plus.py --config config/zod/deeplab/specialization/rgb_human_only.json --upload
+python3 benchmark.py --config config/zod/deeplab/specialization/rgb_human_only.json
 
 # Vehicle + Sign Specialization
-python train_deeplabv3plus.py --config config/zod/deeplab/rgb_vehicle_sign.json
-python test_deeplabv3plus.py --config config/zod/deeplab/rgb_vehicle_sign.json
-python visualize_deeplabv3plus.py --config config/zod/deeplab/rgb_vehicle_sign.json --upload
-python3 benchmark.py --config config/zod/deeplab/rgb_vehicle_sign.json
+python train_deeplabv3plus.py --config config/zod/deeplab/specialization/rgb_vehicle_sign.json
+python test_deeplabv3plus.py --config config/zod/deeplab/specialization/rgb_vehicle_sign.json
+python visualize_deeplabv3plus.py --config config/zod/deeplab/specialization/rgb_vehicle_sign.json --upload
+python3 benchmark.py --config config/zod/deeplab/specialization/rgb_vehicle_sign.json
 
 # Vehicle + Human Specialization
-python train_deeplabv3plus.py --config config/zod/deeplab/rgb_vehicle_human.json
-python test_deeplabv3plus.py --config config/zod/deeplab/rgb_vehicle_human.json
-python visualize_deeplabv3plus.py --config config/zod/deeplab/rgb_vehicle_human.json --upload
-python3 benchmark.py --config config/zod/deeplab/rgb_vehicle_human.json
+python train_deeplabv3plus.py --config config/zod/deeplab/specialization/rgb_vehicle_human.json
+python test_deeplabv3plus.py --config config/zod/deeplab/specialization/rgb_vehicle_human.json
+python visualize_deeplabv3plus.py --config config/zod/deeplab/specialization/rgb_vehicle_human.json --upload
+python3 benchmark.py --config config/zod/deeplab/specialization/rgb_vehicle_human.json
 
 # Sign + Human Specialization
-python train_deeplabv3plus.py --config config/zod/deeplab/rgb_sign_human.json
-python test_deeplabv3plus.py --config config/zod/deeplab/rgb_sign_human.json
-python visualize_deeplabv3plus.py --config config/zod/deeplab/rgb_sign_human.json --upload
-python3 benchmark.py --config config/zod/deeplab/rgb_sign_human.json
+python train_deeplabv3plus.py --config config/zod/deeplab/specialization/rgb_sign_human.json
+python test_deeplabv3plus.py --config config/zod/deeplab/specialization/rgb_sign_human.json
+python visualize_deeplabv3plus.py --config config/zod/deeplab/specialization/rgb_sign_human.json --upload
+python3 benchmark.py --config config/zod/deeplab/specialization/rgb_sign_human.json

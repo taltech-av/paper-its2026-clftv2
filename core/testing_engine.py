@@ -199,12 +199,14 @@ class TestingEngine:
             fw_iou = (weights * eval_IoU).sum().item()
         
         # Add overall metrics
+        confusion_matrix_labels = [cls['name'] for cls in sorted(self.config['Dataset']['train_classes'], key=lambda x: x['index'])]
         results['overall'] = {
             'mIoU_foreground': torch.mean(eval_IoU).item(),
             'mean_accuracy': mean_accuracy,
             'fw_iou': fw_iou,
             'pixel_accuracy': pixel_accuracy.item(),
-            'confusion_matrix': accumulators['confusion_matrix'].cpu().tolist()
+            'confusion_matrix': accumulators['confusion_matrix'].cpu().tolist(),
+            'confusion_matrix_labels': confusion_matrix_labels
         }
         
         return results

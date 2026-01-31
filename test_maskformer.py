@@ -269,12 +269,14 @@ def test_model_on_weather(config, model, device, weather_condition, checkpoint_p
         }
 
     # Add overall metrics
+    confusion_matrix_labels = [cls['name'] for cls in sorted(config['Dataset']['train_classes'], key=lambda x: x['index'])]
     results['overall'] = {
         'mIoU_foreground': epoch_metrics['mean_iou'],
         'mean_accuracy': mean_accuracy,
         'fw_iou': fw_iou,
         'pixel_accuracy': pixel_accuracy,
-        'confusion_matrix': accumulators['confusion_matrix'].cpu().tolist()
+        'confusion_matrix': accumulators['confusion_matrix'].cpu().tolist(),
+        'confusion_matrix_labels': confusion_matrix_labels
     }
 
     print(f"{weather_condition} Results:")

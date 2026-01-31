@@ -1,6 +1,6 @@
 {
-    "Summary": "ZOD DeepLabV3+ RGB - Sign Only Specialization",
-    "tags": ["ZOD", "DeepLabV3+", "RGB", "Sign-Only", "Specialization"],
+    "Summary": "ZOD DeepLabV3+ RGB - Vehicle + Sign Specialization",
+    "tags": ["ZOD", "DeepLabV3+", "RGB", "Vehicle-Sign", "Specialization"],
     "CLI": {"backbone": "deeplabv3plus", "mode": "rgb", "path": "./zod_dataset/"},
     "General": {
         "device": "cuda:0",
@@ -14,7 +14,7 @@
         "max_epochs": 2,
         "model_path": ""
     },
-    "Log": {"logdir": "./logs/zod/deeplab_rgb_sign_only/"},
+    "Log": {"logdir": "./logs/zod/deeplab/vehicle_sign/"},
     "DeepLabV3Plus": {
         "learning_rate": 0.0001,
         "backbone": "resnet101",
@@ -52,8 +52,9 @@
             {"name": "pedestrian", "index": 5}
         ],
         "train_classes": [
-            {"name": "background", "index": 0, "weight": 0.5, "dataset_mapping": [0, 1, 2, 4, 5], "color": [0, 0, 0]},
-            {"name": "sign", "index": 1, "weight": 15.0, "dataset_mapping": [3], "color": [255, 0, 0]}
+            {"name": "background", "index": 0, "weight": 0.5, "dataset_mapping": [0, 1, 4, 5], "color": [0, 0, 0]},
+            {"name": "vehicle", "index": 1, "weight": 10.0, "dataset_mapping": [2], "color": [128, 0, 128]},
+            {"name": "sign", "index": 2, "weight": 15.0, "dataset_mapping": [3], "color": [255, 0, 0]}
         ]
     }
 }

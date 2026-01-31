@@ -309,6 +309,7 @@ def convert_metrics_to_serializable(metrics, config, num_eval_classes):
         }
     
     # Add overall metrics under 'overall' key
+    confusion_matrix_labels = [cls['name'] for cls in sorted(config['Dataset']['train_classes'], key=lambda x: x['index'])]
     serializable['overall'] = {
         'mIoU_foreground': float(metrics['mean_iou']),
         'mean_precision': float(torch.mean(metrics['precision']).item()),
@@ -318,7 +319,8 @@ def convert_metrics_to_serializable(metrics, config, num_eval_classes):
         'pixel_accuracy': float(metrics['pixel_accuracy']),
         'mean_accuracy': float(metrics['mean_accuracy']),
         'fw_iou': float(metrics['fw_iou']),
-        'confusion_matrix': metrics['confusion_matrix'].tolist()
+        'confusion_matrix': metrics['confusion_matrix'].tolist(),
+        'confusion_matrix_labels': confusion_matrix_labels
     }
     
     return serializable

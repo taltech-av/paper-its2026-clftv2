@@ -1,7 +1,7 @@
 {
-    "Summary": "Waymo DeepLabV3+ RGB Baseline",
-    "tags": ["Waymo", "DeepLabV3+", "RGB", "Baseline"],
-    "CLI": {"backbone": "deeplabv3plus", "mode": "rgb", "path": "./waymo_dataset/splits_clft/"},
+    "Summary": "Waymo DeepLabV3+ Lidar Baseline",
+    "tags": ["Waymo", "DeepLabV3+", "Lidar", "Baseline"],
+    "CLI": {"backbone": "deeplabv3plus", "mode": "lidar", "path": "./waymo_dataset/splits_clft/"},
     "General": {
         "device": "cuda:0",
         "epochs": 100,
@@ -14,7 +14,7 @@
         "max_epochs": 2,
         "model_path": ""
     },
-    "Log": {"logdir": "./logs/waymo/deeplab/rgb_baseline/"},
+    "Log": {"logdir": "./logs/waymo/deeplab/lidar_baseline/"},
     "DeepLabV3Plus": {
         "learning_rate": 0.0001,
         "backbone": "resnet101",
