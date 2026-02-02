@@ -1,7 +1,7 @@
 {
-    "Summary": "ZOD DeepLabV3+ RGB - Sign Only Specialization",
-    "tags": ["ZOD", "DeepLabV3+", "RGB", "Sign-Only", "Specialization"],
-    "CLI": {"backbone": "deeplabv3plus", "mode": "rgb", "path": "./zod_dataset/"},
+    "Summary": "ZOD DeepLabV3+ Fusion - Sign + Human Specialization",
+    "tags": ["ZOD", "DeepLabV3+", "Fusion", "Sign-Human", "Specialization"],
+    "CLI": {"backbone": "deeplabv3plus", "mode": "fusion", "path": "./zod_dataset/"},
     "General": {
         "device": "cuda:0",
         "epochs": 100,
@@ -14,11 +14,12 @@
         "max_epochs": 2,
         "model_path": ""
     },
-    "Log": {"logdir": "./logs/zod/deeplab/sign_only/"},
+    "Log": {"logdir": "./logs/zod/deeplab/sign_human/"},
     "DeepLabV3Plus": {
         "learning_rate": 0.0001,
         "backbone": "resnet101",
         "pretrained": true,
+        "fusion_strategy": "residual_average",
         "lr_scheduler": {"type": "step", "step_size": 15, "gamma": 0.5}
     },
     "Dataset": {
@@ -52,8 +53,9 @@
             {"name": "pedestrian", "index": 5}
         ],
         "train_classes": [
-            {"name": "background", "index": 0, "weight": 0.5, "dataset_mapping": [0, 1, 2, 4, 5], "color": [0, 0, 0]},
-            {"name": "sign", "index": 1, "weight": 15.0, "dataset_mapping": [3], "color": [255, 0, 0]}
+            {"name": "background", "index": 0, "weight": 0.5, "dataset_mapping": [0, 1, 2], "color": [0, 0, 0]},
+            {"name": "sign", "index": 1, "weight": 15.0, "dataset_mapping": [3], "color": [255, 0, 0]},
+            {"name": "human", "index": 2, "weight": 20.0, "dataset_mapping": [4, 5], "color": [0, 255, 255]}
         ]
     }
 }

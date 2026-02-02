@@ -1,7 +1,7 @@
 {
-    "Summary": "ZOD RGB CLFT-Hybrid - Human Specialization",
-    "tags": ["ZOD", "CLFT-Hybrid", "RGB", "Human-Only", "Specialization"],
-    "CLI": {"backbone": "clft", "mode": "rgb", "path": "./zod_dataset/"},
+    "Summary": "ZOD Fusion CLFT-Hybrid - Human Specialization",
+    "tags": ["ZOD", "CLFT-Hybrid", "Fusion", "Human-Only", "Specialization"],
+    "CLI": {"backbone": "clft", "mode": "cross_fusion", "path": "./zod_dataset/"},
     "General": {
         "device": "cuda:0",
         "epochs": 200,
