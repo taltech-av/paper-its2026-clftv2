@@ -129,7 +129,7 @@ class TestingEngine:
     
     def _get_array_indices(self):
         """Get array indices for eval classes."""
-        if self.dataset_name in ['zod', 'waymo']:
+        if self.dataset_name in ['zod', 'waymo', 'iseauto']:
             return [idx - 1 for idx in self.metrics_calc.eval_indices]
         else:
             return self.metrics_calc.eval_indices

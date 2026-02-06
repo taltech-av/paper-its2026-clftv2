@@ -150,6 +150,8 @@ def main():
     dataset_name = config['Dataset']['name']
     if dataset_name == 'waymo':
         path = 'waymo_dataset/splits_clft/visualizations.txt'
+    elif dataset_name == 'iseauto':
+        path = 'xod_dataset/visualization.txt'  # Use dedicated visualization set
     else:
         path = 'zod_dataset/visualizations.txt'
     

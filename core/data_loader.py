@@ -25,14 +25,18 @@ class DataLoader:
     
     def _setup_lidar_normalization(self):
         """Setup dataset-specific LiDAR normalization."""
-        self.lidar_mean = self.config['Dataset']['transforms'].get(
-            'lidar_mean', 
-            self.config['Dataset']['transforms']['lidar_mean_waymo']
-        )
-        self.lidar_std = self.config['Dataset']['transforms'].get(
-            'lidar_std', 
-            self.config['Dataset']['transforms']['lidar_std_waymo']
-        )
+        if self.dataset_name == 'iseauto':
+            self.lidar_mean = self.config['Dataset']['transforms']['lidar_mean_iseauto']
+            self.lidar_std = self.config['Dataset']['transforms']['lidar_std_iseauto']
+        else:
+            self.lidar_mean = self.config['Dataset']['transforms'].get(
+                'lidar_mean', 
+                self.config['Dataset']['transforms']['lidar_mean_waymo']
+            )
+            self.lidar_std = self.config['Dataset']['transforms'].get(
+                'lidar_std', 
+                self.config['Dataset']['transforms']['lidar_std_waymo']
+            )
     
     def load_rgb(self, image_path):
         """Load and preprocess RGB image."""
@@ -67,6 +71,8 @@ class DataLoader:
         """Load and preprocess LiDAR data (dataset-specific)."""
         if self.dataset_name == 'waymo':
             return self._load_waymo_lidar(lidar_path)
+        elif self.dataset_name == 'iseauto':
+            return self._load_zod_lidar(lidar_path)  # Iseauto uses same format as ZOD
         else:  # ZOD
             return self._load_zod_lidar(lidar_path)
     

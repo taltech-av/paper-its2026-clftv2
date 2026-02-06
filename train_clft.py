@@ -26,9 +26,14 @@ def calculate_num_classes(config):
     """
     Calculate number of training classes.
     
-    Returns the count of classes defined in train_classes.
+    Returns max_index + 1, where max_index is the highest class index in train_classes.
+    This ensures the model outputs predictions for all possible class indices.
     """
-    return len(config['Dataset']['train_classes'])
+    train_classes = config['Dataset']['train_classes']
+    if not train_classes:
+        raise ValueError("No training classes defined in config")
+    max_index = max(cls['index'] for cls in train_classes)
+    return max_index + 1
 
 
 def calculate_num_eval_classes(config, num_classes):
@@ -67,7 +72,7 @@ def setup_criterion(config):
 def setup_overlap_function(config):
     """Setup dataset-specific overlap calculation function."""
     dataset_name = config['Dataset']['name']
-    if dataset_name in ['zod', 'waymo']:
+    if dataset_name in ['zod', 'waymo', 'iseauto']:
         print(f"Using unified IoU calculation (excludes background only)")
         return find_overlap_exclude_bg_ignore
 
