@@ -102,7 +102,25 @@ def process_images(model, data_loader, visualizer, image_paths, dataroot,
         # Run inference
         with torch.no_grad():
             rgb_input, lidar_input = prepare_model_inputs(rgb, lidar, modality)
-            _, output_seg = model(rgb_input, lidar_input, modality)
+            model_outputs = model(rgb_input, lidar_input, modality)
+            
+            # Process model outputs same as testing engine
+            if isinstance(model_outputs, tuple):
+                if len(model_outputs) == 2:
+                    # (depth, segmentation) format
+                    if model_outputs[0] is None:
+                        output_seg = model_outputs[1]
+                    else:
+                        output_seg = model_outputs[0]
+                elif len(model_outputs) == 3:
+                    # (segmentation, None, None) format
+                    output_seg = model_outputs[0]
+                else:
+                    raise ValueError(f"Unexpected model output format: {len(model_outputs)} outputs")
+            else:
+                # Single output
+                output_seg = model_outputs
+            output_seg = output_seg.squeeze(1)
         
         # Visualize
         visualizer.visualize_prediction(output_seg, cam_path, anno_path, idx)

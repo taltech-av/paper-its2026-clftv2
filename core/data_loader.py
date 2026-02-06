@@ -26,8 +26,8 @@ class DataLoader:
     def _setup_lidar_normalization(self):
         """Setup dataset-specific LiDAR normalization."""
         if self.dataset_name == 'iseauto':
-            self.lidar_mean = self.config['Dataset']['transforms']['lidar_mean_iseauto']
-            self.lidar_std = self.config['Dataset']['transforms']['lidar_std_iseauto']
+            self.lidar_mean = self.config['Dataset']['transforms']['lidar_mean']
+            self.lidar_std = self.config['Dataset']['transforms']['lidar_std']
         else:
             self.lidar_mean = self.config['Dataset']['transforms'].get(
                 'lidar_mean', 
@@ -81,10 +81,8 @@ class DataLoader:
         lidar_pil = Image.open(lidar_path)
         lidar_tensor = TF.to_tensor(lidar_pil)
         
-        # Normalize
-        lidar_tensor = transforms.Normalize(
-            mean=self.lidar_mean, std=self.lidar_std
-        )(lidar_tensor)
+        # For ZOD PNG data, do NOT apply normalization (matches training)
+        # The PNG values are already in [0, 1] range
         
         lidar_tensor = transforms.Resize((self.resize, self.resize))(lidar_tensor)
         
