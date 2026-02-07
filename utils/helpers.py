@@ -19,7 +19,7 @@ def creat_dir(config):
 
 def get_annotation_path(cam_path, dataset_name, config):
     """Get annotation path based on dataset and config."""
-    if dataset_name == 'zod':
+    if dataset_name in ['zod', 'iseauto']:
         anno_folder = config['Dataset']['annotation_path']
         return cam_path.replace('camera', anno_folder)
     else:  # waymo
