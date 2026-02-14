@@ -214,7 +214,12 @@ def main():
     
     # Setup vision service
     if training_uuid:
-        if config['General']['resume_training'] and vision_training_id is None:
+        create_new = config['General'].get('create_new_training', False)
+        if create_new:
+            # Force create new training
+            print("Creating new training in vision service (transfer learning mode)")
+            vision_training_id = setup_vision_service(config, training_uuid)
+        elif config['General']['resume_training'] and vision_training_id is None:
             # Look up existing training by UUID only if we don't have it from logs
             print("Resuming training - looking up existing training record...")
             vision_training_id = get_training_by_uuid(training_uuid)
