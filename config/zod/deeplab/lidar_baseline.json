@@ -16,7 +16,7 @@
     },
     "Log": {"logdir": "./logs/zod/deeplab/lidar_baseline/"},
     "DeepLabV3Plus": {
-        "learning_rate": 0.0001,
+        "learning_rate": 8e-05,
         "backbone": "resnet101",
         "pretrained": true,
         "lr_scheduler": {"type": "step", "step_size": 15, "gamma": 0.5}

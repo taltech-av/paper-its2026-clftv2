@@ -16,7 +16,7 @@
     },
     "Log": {"logdir": "./logs/zod/deeplab/sign_only/"},
     "DeepLabV3Plus": {
-        "learning_rate": 0.0001,
+        "learning_rate": 8e-05,
         "backbone": "resnet101",
         "pretrained": true,
         "fusion_strategy": "residual_average",
