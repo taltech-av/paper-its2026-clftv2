@@ -1,4 +1,4 @@
-# Fusion Training: CLFTv2
+# Fusion Training
 
 This repository contains the implementation for the paper "SAM-Enhanced Segmentation on ZOD and Iseauto: Balancing Critical Classes in Autonomous Driving".
 
